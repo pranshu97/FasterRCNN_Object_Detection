@@ -5,8 +5,8 @@ In this example, I have trained it on a dataset with cars and persons in COCO fo
 
 ### How to run
 1. Clone the repo
-2. Install requirements `pip install -r requirements.txt`
-4. Change image directory and run test.py </br>
+2. Install requirements `pip install -r requirements.txt` (Might need to install torch and torchvision separately)
+4. Change image directory and run test.py (or test_video.py) </br>
     - `python3 test.py`
 
 ### Results
