@@ -10,6 +10,8 @@ In this example, I have trained it on a dataset with cars and persons in COCO fo
     - `python3 test.py`
 
 ### Results
+![](Outputs/image_000001307.jpg)
+
 ![](Outputs/output.gif)
 
 ### Possible Future Works
