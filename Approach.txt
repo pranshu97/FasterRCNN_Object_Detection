@@ -1,0 +1,30 @@
+Model name: Faster-RCNN 
+
+Link to dataset: https://evp-ml-data.s3.us-east-2.amazonaws.com/ml-interview/openimages-personcar/trainval.tar.gz
+Link to framework: PyTorch (https://pytorch.org/) and Pytorch-Lightning (https://www.pytorchlightning.ai/). Previously, I have worked with existing Object detection frameworks like Detectron, Yolov5 etc. So, this time I took a challenge to implement the training framework by myself.
+
+About the model: Faster RCNN belongs the to RCNN family of detection models (Predecessor: RCNN and Fast RCNN). It is a multi stage model which makes it more accurate but also slower. It consists of:
+1. A region proposal network which generated the regions of possible objects. The earlier versions used Selective Search for this which was slower and less accurate.
+2. A feature extractor to extract features of the objects. Here, I have used resnet50 as the feature extractor.
+3. A classification head which predicts the class of the objects.
+4. A Regression head which predicts the bounding boxes of the objects.
+
+Primary Analysis: The dataset contains 2239 images and 16772 annotations with around 10K persons and around 6K Cars. The dataset seems slightly skewed but it shouldn't be a problem. 
+There are images with varying lighting, close-up, wide range shots and even some black and white images. The annotations are also highly variable in size, some boxes are almost the size of image whereas some are tiny.
+The "Car" class does not include Buses, Trucks and Vans. Sometimes, more than one person is enclosed in a single "Person" box. Even drawing's/ icons are annotated as objects.
+The image size is mostly consistent, most of the image are near about 1024x720. There are very few outliers, which I had removed to keep the dataset consistent. Although, later I used RandomCrop instead of Resize so keeping them wouldn't have hurt much.
+
+Assumptions: I have assumed that the Accuracy takes preference over Speed(FPS), and therefore used FasterRCNN model (instead of SSD or YOLO) and used ResNet50 backbone (instead of MobileNetv3).
+I have also assumed that the data annotations are all correct and consistent, although I did plot and checked a few of them but not all.
+
+Inference: I have created 2 separate inference script, one for testing on images and another for testing on videos. I was thinking of adding argparse but it didn't seemed necessarry in this case.
+
+False Positives: Cars- For the cars class, the FP are usually the Vans being predicted as cars in some rare cases. Although I am not sure if this is False positive. Also, there are False Negatives in some cases where car is partly visible. Maybe the dataset didn't had enough of "part car" from those angles.
+		 Person- For the person class, the FP are Statues, some in-animate objects with hand like figures. Again, there are some rare False Negatives with partly visible person.
+
+Conclusion: Overall, I would say it's a pretty decent POC level model. It is able to detect, quite precisely, the obviously visible objects as well as doing well even in cases of partially visible objects.
+
+Recommendation: Adding more data would definitely help. Although, there's no need to get more data annotated. The current model is good enough to build upon using the "Noisy Student Approach", ofcourse we'll have to manually filter some of the data point where the model is completely wrong but that's still easier than annotating the images.
+
+
+NOTE: I was having some troubles installing pycocotools for windows on my Windows 11 system (Worked well earlier on Windows 10), so I have used IoU as the metric in place of mAP.

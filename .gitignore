@@ -1,0 +1,4 @@
+__pycache__/
+*.ckpt
+*.mp4
+*.avi # converted output to gif to upload

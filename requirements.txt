@@ -1,0 +1,8 @@
+numpy==1.20.1
+opencv-python==4.5.4.60
+albumentations==1.0.3
+pytorch-lightning==1.4.7
+
+# Install separately using command from pytorch website
+# torch==1.9.0+cu111
+# torchvision==0.10.0+cu111
