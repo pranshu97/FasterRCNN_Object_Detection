@@ -15,5 +15,5 @@ In this example, I have trained it on a dataset with cars and persons in COCO fo
 ![](Outputs/output.gif)
 
 ### Possible Future Works
-- [ ] Adding arguments for training
-- [ ] Containerization
+- [ ] Adding arguments (argparse) for training
+- [ ] Containerization (Docker)
